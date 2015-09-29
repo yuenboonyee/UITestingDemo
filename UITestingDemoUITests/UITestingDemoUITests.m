@@ -45,10 +45,13 @@
     
     XCUIApplication *app = [[XCUIApplication alloc] init];
     XCUIElement *masterNavigationBar = app.navigationBars[@"Master"];
+    XCUIElementQuery *tablesQuery = app.tables;
+    NSUInteger numberOfRowsAtStart = tablesQuery.cells.count;
+
     [masterNavigationBar.buttons[@"Add"] tap];
+    XCTAssertEqual(tablesQuery.cells.count, numberOfRowsAtStart+1);
     [masterNavigationBar.buttons[@"Edit"] tap];
     
-    XCUIElementQuery *tablesQuery = app.tables;
     //The following code was added by the recording tool, but is label dependent and will not match any subsequently created records, rendering the test un-repeatable.
 //    [tablesQuery.buttons[@"Delete 2015-09-28 23:38:49 +0000"] tap];
 
@@ -56,6 +59,7 @@
     [[tablesQuery.buttons elementBoundByIndex:0] tap];
 
     [tablesQuery.buttons[@"Delete"] tap];
+    XCTAssertEqual(tablesQuery.cells.count, numberOfRowsAtStart);
     [masterNavigationBar.buttons[@"Done"] tap];
     
 }
