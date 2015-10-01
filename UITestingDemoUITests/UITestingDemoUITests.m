@@ -48,7 +48,16 @@
     XCUIElementQuery *tablesQuery = app.tables;
     NSUInteger numberOfRowsAtStart = tablesQuery.cells.count;
 
-    [masterNavigationBar.buttons[@"Add"] tap];
+    [[[XCUIApplication alloc] init].navigationBars[@"Detail"].staticTexts[@"Detail"] doubleTap];
+    
+    //Check to see if it's iPad or iPhone.
+    if (app.navigationBars[@"Detail"].exists) {
+        //Show the split-view controller.
+        [app.navigationBars[@"Detail"].buttons[@"Master"] tap];
+        [app.navigationBars[@"Master"].buttons[@"Add"] tap];
+    }else{
+        [masterNavigationBar.buttons[@"Add"] tap];
+    }
     [tablesQuery.cells containingType:XCUIElementTypeStaticText identifier:@""];
 
     XCTAssertEqual(tablesQuery.cells.count, numberOfRowsAtStart+1);
