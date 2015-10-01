@@ -47,8 +47,6 @@
     XCUIElement *masterNavigationBar = app.navigationBars[@"Master"];
     XCUIElementQuery *tablesQuery = app.tables;
     NSUInteger numberOfRowsAtStart = tablesQuery.cells.count;
-
-    [[[XCUIApplication alloc] init].navigationBars[@"Detail"].staticTexts[@"Detail"] doubleTap];
     
     //Check to see if it's iPad or iPhone.
     if (app.navigationBars[@"Detail"].exists) {
