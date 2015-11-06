@@ -77,4 +77,41 @@
     [masterNavigationBar.buttons[@"Done"] tap];
     
 }
+
+-(void)testAddAndRemoveRecordFailing{
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    XCUIElement *masterNavigationBar = app.navigationBars[@"Master"];
+    XCUIElementQuery *tablesQuery = app.tables;
+    NSUInteger numberOfRowsAtStart = tablesQuery.cells.count;
+    
+    //Check to see if it's iPad or iPhone.
+    if (app.navigationBars[@"Detail"].exists) {
+        //Show the split-view controller.
+        [app.navigationBars[@"Detail"].buttons[@"Master"] tap];
+        [app.navigationBars[@"Master"].buttons[@"Add"] tap];
+    }else{
+        [masterNavigationBar.buttons[@"Add"] tap];
+    }
+    [tablesQuery.cells containingType:XCUIElementTypeStaticText identifier:@""];
+    
+    XCTAssertEqual(tablesQuery.cells.count, numberOfRowsAtStart+1);
+    
+    [masterNavigationBar.buttons[@"Editzzz"] tap];
+    
+    //The following code was added by the recording tool, but is label dependent and will not match any subsequently created records, rendering the test un-repeatable.
+    //    [tablesQuery.buttons[@"Delete 2015-09-28 23:38:49 +0000"] tap];
+    
+    //We'll use the following element selector instead, which will always tap on the first row's delete button.
+    //Tap round delete (-) button. 2 ways to do that.
+    //    [[tablesQuery.buttons elementBoundByIndex:0] tap];
+    [[[tablesQuery.buttons matchingPredicate:[NSPredicate predicateWithFormat:@"label BEGINSWITH 'Delete'"]] elementBoundByIndex:0] tap];
+    
+    //Tap the square delete button.
+    [tablesQuery.buttons[@"Delete"] tap];
+    
+    XCTAssertEqual(tablesQuery.cells.count, numberOfRowsAtStart);
+    [masterNavigationBar.buttons[@"Done"] tap];
+    
+}
 @end
