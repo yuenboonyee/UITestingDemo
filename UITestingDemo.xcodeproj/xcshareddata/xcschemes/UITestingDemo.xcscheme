@@ -38,6 +38,14 @@
                BlueprintName = "UITestingDemoUITests"
                ReferencedContainer = "container:UITestingDemo.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "UITestingDemoUITests/testAddAndRemoveRecord">
+               </Test>
+               <Test
+                  Identifier = "UITestingDemoUITests/testAddAndRemoveRecordFailing">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
